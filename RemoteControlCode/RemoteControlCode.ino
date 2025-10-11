@@ -16,7 +16,7 @@ int JoyStick_X_Input = A0;
 int JoyStick_Y_Input = A1; 
 int Button = 3;
 
-void setup(){
+void setup() {
 pinMode(JoyStick_X_Input, INPUT);
 pinMode(JoyStick_Y_Input, INPUT);
 pinMode(Button, INPUT);
@@ -25,7 +25,7 @@ digitalWrite(Button, HIGH);
 Serial.begin (9600); // serial output with 9600 bps
 }
 
-void loop(){
+void loop() {
 float JoyStick_X_Output, JoyStick_Y_Output;
 int JoyStickButton;
 
@@ -44,10 +44,10 @@ Serial.print("V, ");
 
 //Buttons
 Serial.print("Button:");
-if JoyStickButton == 1){
+if(JoyStickButton == 1) {
 Serial.println("not pushed");
 }
-else{
+else {
 Serial.println("pushed");
 }
 delay (200);
