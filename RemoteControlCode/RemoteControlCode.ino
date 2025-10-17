@@ -20,6 +20,8 @@ void setup() {
 pinMode(JoyStick_X_Input, INPUT);
 pinMode(JoyStick_Y_Input, INPUT);
 pinMode(Button, INPUT);
+pinMode(buttonYellow, INPUT_PULLUP);//when the button is not press it is HIGH
+Serial.println("Ready?");
 
 digitalWrite(Button, HIGH);
 Serial.begin (9600); // serial output with 9600 bps
@@ -51,4 +53,9 @@ else {
 Serial.println("pushed");
 }
 delay (200);
+int state = digitalRead(buttonYellow);
+  if (state == LOW) {
+    Serial.println("button pushed");
+    delay(1000);
+
 }
