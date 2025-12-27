@@ -1,5 +1,4 @@
-
-/**
+**
 REMOTE CONTROL CODE
 
 Be able to have inputs and send those inputs to the
@@ -9,11 +8,12 @@ Todo:
 -Add LED turn on when the program is on. 
 -Add LED when connected.
 -Add integration with ESPNOW.
-*/
+/
 
 //declaring joystick pins (these might be changed)
 int JoyStick_X_Input = A0; 
 int JoyStick_Y_Input = A1; 
+int buttonYellow = 5;
 int Button = 3;
 
 void setup() {
@@ -31,7 +31,7 @@ void loop() {
 float JoyStick_X_Output, JoyStick_Y_Output;
 int JoyStickButton;
 
-JoyStick_X_Output = analogRead(JoyStick_X_Input) * (5.0 / 1023.0);
+JoyStick_X_Output = analogRead(JoyStick_X_Input) (5.0 / 1023.0);
 JoyStick_Y_Output = analogRead(JoyStick_Y_Input) * (5.0 / 1023.0); 
 JoyStickButton = digitalRead(Button);
 
@@ -57,5 +57,5 @@ int state = digitalRead(buttonYellow);
   if (state == LOW) {
     Serial.println("button pushed");
     delay(1000);
-
+  }
 }
