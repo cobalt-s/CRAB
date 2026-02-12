@@ -1,77 +1,72 @@
-*REMOTE CONTROL CODE
+//Connections for different controller parts
+const int JoyStick_X_Input = 0; //pin number to be changed when we wire the eps32
+const int JoyStick_Y_Input = 1; //pin number to be changed when we wire the eps32
+const int JoyStick_Button = 3;  //pin number to be changed when we wire the eps32
+const int buttonPinBlue = 5;    //pin number to be changed when we wire the eps32
+const int buttonPinYellow = 6;  //pin number to be changed when we wire the eps32
 
-    Be able to have inputs and send those inputs to the
-      other ESP
-  
-32 to make the robot move.
+/*
+// Receiver MAC address (match with receiver address)
+uint8_t receiverMAC[] = {0x44, 0x1D, 0x64, 0xF8, 0x22, 0xD8};
+*/
 
-    Todo : -Add LED turn on when the program is on.
-  
-Add LED when connected.
-Add integration with ESPNOW./
+//Setting up variables as floats and ints
+float JoyStick_X_Output, JoyStick_Y_Output;
+int JoyStickButton;
 
-      //declaring joystick pins (these might be changed)
+/*
+typedef struct message {
+  uint8_t buttonID;
+} message;
 
-int JoyStick_X_Input = A0;
-int JoyStick_Y_Input = A1;
-int JoyStick_Button = 3;
-const int buttonPinBlue = 5;
-const int buttonPinYellow = 6;
+message sendData;
+*/
 
-adslfihasdflihasdflh
 
 void setup() {
+  //Set's up pins to read Joystick values
   pinMode(JoyStick_X_Input, INPUT);
   pinMode(JoyStick_Y_Input, INPUT);
+  //Set's up pins to read button values
+  pinMode(JoyStick_Button, INPUT_PULLUP); //when the button is not pressed it is HIGH
+  pinMode(buttonPinBlue, INPUT_PULLUP);  //when the button is not pressed it is HIGH
+  pinMode(buttonPinYellow, INPUT_PULLUP);//when the button is not pressed it is HIGH
 
-  pinMode(buttonPinBlue, INPUT_PULLUP);  //when the button is not press it is HIGH
-  pinMode(buttonPinYellow, INPUT_PULLUP);
-
+   // serial output with 9600 bps
   Serial.begin(9600); 
   Serial.println("Remote control is ready.");
- // serial output with 9600 bps
 }
 
-void loop() {
-  float JoyStick_X_Output, JoyStick_Y_Output;
-  int JoyStickButton;
+//turns the input from a joystick into a -1.0 to 1.0 range
+float readJoySitckRange(int pin){
+  return(analogRead(pin) - 512) / 512.0;
+}
 
-  JoyStick_X_Output = analogRead(JoyStick_X_Input) (5.0 / 1023.0);
-  JoyStick_Y_Output = analogRead(JoyStick_Y_Input) * (5.0 / 1023.0);
-  JoyStickButton = digitalRead(JoyStick_Button);
+//Assumes the button is a Pull Up
+bool buttonPressCheck(int pin){
+  return digitalRead(pin) == LOW; //recall if LOW, that means it is pressed
+}
 
-  //Joysticks
-  Serial.print("X-axis:");
-  Serial.print(JoyStick_X_Output, 4);
-  Serial.print("V, ");
+//This method compiles a string that showcases the state of all buttons and
+//Joystick
+void inputConsoleDebug(){
+  Serial.print("Blue Pressed: ");
+  Serial.print(buttonPressCheck(buttonPinBlue));
 
-  Serial.print("Y-axis:");
-  Serial.print(JoyStick_Y_Output, 4);
-  Serial.print("V, ");
+  Serial.print("   Yellow Pressed: ");
+  Serial.print(buttonPressCheck(buttonPinYellow));
 
-  //Buttons
-  Serial.print("Button:");
-  if (JoyStickButton == 1) {
-    Serial.println("not pushed");
-  } else {
-    Serial.println("pushed");
-  }
-  delay(200);
+  Serial.print("   Joystick Pressed: ");
+  Serial.print(buttonPressCheck(JoyStick_Button));
 
+  Serial.print("   Joystick X: ");
+  Serial.print(readJoySitckRange(JoyStick_X_Input));
 
- int state_blue = digitalRead(buttonPinBlue);
+  Serial.print("   Joystick Y: ");
+  Serial.println(readJoySitckRange(JoyStick_Y_Input));
+}
 
-  if (state_blue == LOW) {
-    Serial.println("button Blue pushed");
-    delay(1000);
-  }
-  else {Serial.println("Button blue not pressed.");
-  }
-
-  if (digitalRead(buttonPinYellow) == LOW){
-    Serial.println("button Yellow pushed");
-  }
-  else {Serial.println("Button Yellow not pressed.");
-  }
+void loop(){
+  inputConsoleDebug();
   delay(1000);
 }
