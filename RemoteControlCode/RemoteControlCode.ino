@@ -1,144 +1,127 @@
-//import statements for ESP now
-#include <Wifi.h>
+/*
+* Remote Control Code for Crab Project
+* Authors: Renzo, Jimmy
+* Date last modified: 4/6/2026
+*/
+
+
+// Import statements for ESP-NOW
+#include <WiFi.h>
 #include <esp_now.h>
 
-//Connections for different controller parts
-const int JoyStick_X_Input = 0; //pin number to be changed when we wire the eps32
-const int JoyStick_Y_Input = 1; //pin number to be changed when we wire the eps32
-const int JoyStick_Button = 3;  //pin number to be changed when we wire the eps32
-const int buttonPinBlue = 5;    //pin number to be changed when we wire the eps32
-const int buttonPinYellow = 6;  //pin number to be changed when we wire the eps32
+// Pin assignments (to be updated when physically wired)
+const int PIN_JOYSTICK_X      = 0;
+const int PIN_JOYSTICK_Y      = 1;
+const int PIN_JOYSTICK_BTN    = 3;
+const int PIN_BTN_BLUE        = 5;
+const int PIN_BTN_YELLOW      = 6;
 
-//
+// Receiver MAC address (must match receiver device)
+const uint8_t RECEIVER_MAC[] = {0x44, 0x1D, 0x64, 0xF8, 0x22, 0xD8};
 
-// Receiver MAC address (match with receiver address)
-uint8_t receiverMAC[] = {0x44, 0x1D, 0x64, 0xF8, 0x22, 0xD8};
-
-
-//Setting up variables as floats and ints
-float JoyStick_X_Output, JoyStick_Y_Output;
-int JoyStickButton;
-
-/*As far as I am aware this sets up what we are sending to the reciever
- *Earlier you were just sending a value for which battery is pressed but
- *After some vibe coding ngl and some thinking I think this is what we 
- *Would need for the controller. 
+/*
+ * Struct defining the data package sent to the receiver.
+ * Includes button states and joystick axes.
  */
-typedef struct message {
-  bool bluePressed;   //Indicates if the blue button is pressed.
-  bool yellPressed;   //Indicates if the yellow button is pressed.
-  bool joySPressed;   //Indicates if the button on the joystick is pressed.
+typedef struct ControllerMessage {
+  bool bluePressed;   // True if the blue button is pressed
+  bool yellowPressed; // True if the yellow button is pressed
+  bool joyBtnPressed; // True if the joystick button is pressed
+  int  joyX;          // Joystick X axis value (-2048 to 2047)
+  int  joyY;          // Joystick Y axis value (-2048 to 2047)
+} ControllerMessage;
 
-  int joyX;  //X value of the joystick.
-  int joyY;  //Y value of the joystick. 
-
-} message;
-
-message sendData;
-
-
+ControllerMessage outgoingData;
 
 
 void setup() {
-  Serial.begin(9600); // serial output with 9600 bps
+  Serial.begin(9600);
   delay(1000);
-  //I turned this into a function so that setup doesn't get cluttered when I 
-  // add wireless stuff.
-  pinSetup();
-  EspNowSetup();
-
+  // Broken into functions to keep setup() clean
+  setupPins();
+  setupEspNow();
   Serial.println("Remote control is ready.");
 }
 
 
-void pinSetup(){
-  //Set's up pins to read Joystick values
-  pinMode(JoyStick_X_Input, INPUT);
-  pinMode(JoyStick_Y_Input, INPUT);
-  //Set's up pins to read button values
-  pinMode(JoyStick_Button, INPUT_PULLUP); //when the button is not pressed it is HIGH
-  pinMode(buttonPinBlue, INPUT_PULLUP);  //when the button is not pressed it is HIGH
-  pinMode(buttonPinYellow, INPUT_PULLUP);//when the button is not pressed it is HIGH
+void setupPins() {
+  pinMode(PIN_JOYSTICK_X,   INPUT);
+  pinMode(PIN_JOYSTICK_Y,   INPUT);
+  pinMode(PIN_JOYSTICK_BTN, INPUT_PULLUP); // HIGH when not pressed
+  pinMode(PIN_BTN_BLUE,     INPUT_PULLUP); // HIGH when not pressed
+  pinMode(PIN_BTN_YELLOW,   INPUT_PULLUP); // HIGH when not pressed
 }
 
 
-void EspNowSetup(){
-  /*I trust Renzo I have no idea what this does?*/
-
+void setupEspNow() {
   WiFi.mode(WIFI_STA);
 
   if (esp_now_init() != ESP_OK) {
     Serial.println("ESP-NOW init failed");
-    return;   //Dr. Schuessler would be disappointed
+    //@TODO: make a LED light go on that shows its not connected/failed. 
+    while (true); // this halts it so it doesn't do anything else since it could not connect. 
   }
 
   esp_now_peer_info_t peerInfo = {};
-  memcpy(peerInfo.peer_addr, receiverMAC, 6); 
-  peerInfo.channel = 0;                       
-  peerInfo.encrypt = false;                   
+  memcpy(peerInfo.peer_addr, RECEIVER_MAC, 6);
+  peerInfo.channel = 0;
+  peerInfo.encrypt = false;
 
   esp_now_add_peer(&peerInfo);
 
-  Serial.println("Transmitter Ready");
+  Serial.println("Transmitter ready.");
 }
 
 
-//turns the input from a joystick into a -2048 to 2047 range (more precise)
-//Note, this 4095 range is for ESP32 only, it would be 1028 for Arduino.
-int readJoySitckRange(int pin){
-  /*
-   * If this is too jittery we could add code to center it when it's a low
-   * enough value.
-   */
-
-  return (analogRead(pin)-2048);
+/*
+ * This reads the analog joystick pin and centers the output around zero. 
+ * Range: -2048 to 2047 (ESP32's 12-bit ADC).
+ * Note: would be -512 to 511 on Arduino's 10-bit ADC.
+ */
+int readJoystickCentered(int pin) {
+  return (analogRead(pin) - 2048);
 }
 
 
-//Assumes the button is a Pull Up
-bool buttonPressCheck(int pin){
-  return digitalRead(pin) == LOW; //recall if LOW, that means it is pressed
-}
-
-void sendStatus(){
-  //I was thinking this might be better if we actually store the state of
-  //The variables instead of just immediately sending them. Not that hard
-  //To tweak if we wanted to.
-  sendData.bluePressed = buttonPressCheck(buttonPinBlue);
-  sendData.yellPressed = buttonPressCheck(buttonPinYellow);
-  sendData.joySPressed = buttonPressCheck(JoyStick_Button);
-
-  sendData.joyX = readJoySitckRange(JoyStick_X_Input);
-  sendData.joyY = readJoySitckRange(JoyStick_Y_Input);
-
-  //Might need to change this idk?
-  esp_now_send(receiverMAC, (uint8_t *)&sendData, sizeof(sendData));
-
-  Serial.print("Package Sent: ");
+// Returns true if the button is pressed (assumes INPUT_PULLUP wiring)
+bool isButtonPressed(int pin) {
+  return digitalRead(pin) == LOW;
 }
 
 
-//This method compiles a string that showcases the state of all buttons and
-//Joystick
-void inputConsoleDebug(){
-  Serial.print("Blue Pressed: ");
-  Serial.print(buttonPressCheck(buttonPinBlue));
+// Reads all inputs into outgoingData and transmits via ESP-NOW
+void sendControllerState() {
+  outgoingData.bluePressed   = isButtonPressed(PIN_BTN_BLUE);
+  outgoingData.yellowPressed = isButtonPressed(PIN_BTN_YELLOW);
+  outgoingData.joyBtnPressed = isButtonPressed(PIN_JOYSTICK_BTN);
+  outgoingData.joyX          = readJoystickCentered(PIN_JOYSTICK_X);
+  outgoingData.joyY          = readJoystickCentered(PIN_JOYSTICK_Y);
 
-  Serial.print("   Yellow Pressed: ");
-  Serial.print(buttonPressCheck(buttonPinYellow));
-
-  Serial.print("   Joystick Pressed: ");
-  Serial.print(buttonPressCheck(JoyStick_Button));
-
-  Serial.print("   Joystick X: ");
-  Serial.print(readJoySitckRange(JoyStick_X_Input));
-
-  Serial.print("   Joystick Y: ");
-  Serial.println(readJoySitckRange(JoyStick_Y_Input));
+  esp_now_send(RECEIVER_MAC, (uint8_t *)&outgoingData, sizeof(outgoingData));
 }
 
-void loop(){
-  inputConsoleDebug();
-  sendStatus();
-  delay(500);  //I think twice every second might be a good speed we can change later.
+
+// Prints all current input states to Serial for debugging
+void debugPrintInputs() {
+  Serial.print("Blue: ");
+  Serial.print(isButtonPressed(PIN_BTN_BLUE));
+
+  Serial.print("   Yellow: ");
+  Serial.print(isButtonPressed(PIN_BTN_YELLOW));
+
+  Serial.print("   Joy Btn: ");
+  Serial.print(isButtonPressed(PIN_JOYSTICK_BTN));
+
+  Serial.print("   Joy X: ");
+  Serial.print(readJoystickCentered(PIN_JOYSTICK_X));
+
+  Serial.print("   Joy Y: ");
+  Serial.println(readJoystickCentered(PIN_JOYSTICK_Y));
+}
+
+
+void loop() {
+  debugPrintInputs();
+  sendControllerState();
+  delay(500); //this is transmitting twice per second 500ms * 2 is 1 sec lol basic math. 
 }
