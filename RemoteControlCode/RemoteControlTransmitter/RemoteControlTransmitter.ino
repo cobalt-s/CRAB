@@ -165,12 +165,8 @@ void debugPrintInputs() {
 }
 
 void debugDisplay() {
-  drawHappyFace();
-  delay(5000);
-  drawHappyFace(15, 10, 20, 1, 50, 40, 1);
-  delay(5000);
-  drawHappyFace(15, 10, 20, 1, 50, 100, 1);
-  delay(5000);
+  switchface ? drawHappyFace() : drawHappyFace(15, 10, 20, 1, 50, 100, 1);
+  switchFace = !switchFace;
 }
 
 void drawEyes(int16_t theXFromCenter, int16_t theY, int16_t theSize, uint16_t theColor){
