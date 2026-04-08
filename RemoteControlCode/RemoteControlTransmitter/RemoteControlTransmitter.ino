@@ -2,6 +2,9 @@
 * Remote Control Code for Crab Project
 * Authors: Renzo, Jimmy
 * Date last modified: 4/6/2026
+* TODO: 
+* add buzzer implementation
+* add screen implementation
 */
 
 
@@ -15,6 +18,8 @@ const int PIN_JOYSTICK_Y      = 1;
 const int PIN_JOYSTICK_BTN    = 3;
 const int PIN_BTN_BLUE        = 5;
 const int PIN_BTN_YELLOW      = 6;
+const int LED_1               = 7; 
+const int LED_2               = 8;
 
 // Receiver MAC address (must match receiver device)
 const uint8_t RECEIVER_MAC[] = {0x44, 0x1D, 0x64, 0xF8, 0x22, 0xD8};
@@ -36,9 +41,10 @@ ControllerMessage outgoingData;
 
 void setup() {
   Serial.begin(9600);
+  Serial.println("DEBUG: Transmitter code setup starting...");
   delay(1000);
-  // Broken into functions to keep setup() clean
   setupPins();
+  Serial.println("DEBUG: Pins Setup");
   setupEspNow();
   Serial.println("Remote control is ready.");
 }
@@ -52,14 +58,21 @@ void setupPins() {
   pinMode(PIN_BTN_YELLOW,   INPUT_PULLUP); // HIGH when not pressed
 }
 
-
+/*
+ * Setup ESPNOw sets up the esp to connect to the other. 
+ */
 void setupEspNow() {
   WiFi.mode(WIFI_STA);
 
   if (esp_now_init() != ESP_OK) {
-    Serial.println("ESP-NOW init failed");
-    //@TODO: make a LED light go on that shows its not connected/failed. 
-    while (true); // this halts it so it doesn't do anything else since it could not connect. 
+    Serial.println("DEBUG: ESP-NOW init failed");
+    pinMode(LED_1, OUTPUT);
+    while (true){
+      digitalWrite(LED_1, HIGH);
+      delay(250);
+      digitalWrite(LED_1, LOW);
+      delay(250);
+    }
   }
 
   esp_now_peer_info_t peerInfo = {};
@@ -67,9 +80,11 @@ void setupEspNow() {
   peerInfo.channel = 0;
   peerInfo.encrypt = false;
 
-  esp_now_add_peer(&peerInfo);
+  if(esp_now_add_peer(&peerInfo) != ESP_OK) {
+    Serial.println("DEBUG: Failed to add peer");
+  }
 
-  Serial.println("Transmitter ready.");
+  Serial.println("DEBUG: TRANSMITTER READY");
 }
 
 
@@ -88,8 +103,10 @@ bool isButtonPressed(int pin) {
   return digitalRead(pin) == LOW;
 }
 
-
-// Reads all inputs into outgoingData and transmits via ESP-NOW
+/*
+ * sendControllerState will send the state of the button to the
+ * other ESP32.
+ */
 void sendControllerState() {
   outgoingData.bluePressed   = isButtonPressed(PIN_BTN_BLUE);
   outgoingData.yellowPressed = isButtonPressed(PIN_BTN_YELLOW);
@@ -103,7 +120,7 @@ void sendControllerState() {
 
 // Prints all current input states to Serial for debugging
 void debugPrintInputs() {
-  Serial.print("Blue: ");
+  Serial.print(".  Blue: ");
   Serial.print(isButtonPressed(PIN_BTN_BLUE));
 
   Serial.print("   Yellow: ");
