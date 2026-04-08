@@ -1,0 +1,172 @@
+Info: Processing symbol 'A1:Module:Arduino_Nano'.
+Info: Processing symbol 'D1:LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z1.6mm'.
+Info: Total warnings: 50, errors: 0.
+Info: Processing symbol 'J2:Module:Arduino_Nano'.
+Info: Processing symbol 'D3:LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm'.
+Info: Processing symbol 'D4:LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm'.
+Info: Processing symbol 'D2:LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm'.
+Info: Processing symbol 'SW2:Button_Switch_SMD:SW_Push_1P1T-SH_NO_CK_KMR2xxG'.
+Info: Processing symbol 'SW1:Button_Switch_SMD:SW_Push_1P1T-SH_NO_CK_KMR2xxG'.
+Info: Processing symbol 'J1:Module:Arduino_Nano'.
+Added D1 (footprint 'LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z1.6mm').
+Changed REF** reference designator to D1.
+Changed D1 value from LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z1.6mm to LED.
+Updated D1 symbol association from  to /b103ad9b-85d2-4a24-b659-ccef887fa0ee.
+Updated D1 fields.
+Updated D1 sheetname to '/'.
+Updated D1 sheetfile to 'buttons stuff.kicad_sch'.
+Updated D1 footprint filters to 'LED* LED_SMD:* LED_THT:*'.
+Add net unconnected-(D1-K-Pad1).
+Connected D1 pin 1 to unconnected-(D1-K-Pad1).
+Add net unconnected-(D1-A-Pad2).
+Connected D1 pin 2 to unconnected-(D1-A-Pad2).
+Added D2 (footprint 'LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm').
+Changed REF** reference designator to D2.
+Changed D2 value from LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm to LED.
+Updated D2 symbol association from  to /24573004-4b1c-4dfe-9b02-393b56c2d3e7.
+Updated D2 fields.
+Updated D2 sheetname to '/'.
+Updated D2 sheetfile to 'buttons stuff.kicad_sch'.
+Updated D2 footprint filters to 'LED* LED_SMD:* LED_THT:*'.
+Add net unconnected-(D2-A-Pad2).
+Connected D2 pin 2 to unconnected-(D2-A-Pad2).
+Add net unconnected-(D2-K-Pad1).
+Connected D2 pin 1 to unconnected-(D2-K-Pad1).
+Added D3 (footprint 'LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm').
+Changed REF** reference designator to D3.
+Changed D3 value from LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm to LED.
+Updated D3 symbol association from  to /7fd851a8-a357-46fb-8bc9-d2a80e2c68bf.
+Updated D3 fields.
+Updated D3 sheetname to '/'.
+Updated D3 sheetfile to 'buttons stuff.kicad_sch'.
+Updated D3 footprint filters to 'LED* LED_SMD:* LED_THT:*'.
+Add net unconnected-(D3-A-Pad2).
+Connected D3 pin 2 to unconnected-(D3-A-Pad2).
+Add net unconnected-(D3-K-Pad1).
+Connected D3 pin 1 to unconnected-(D3-K-Pad1).
+Added D4 (footprint 'LED_THT:LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm').
+Changed REF** reference designator to D4.
+Changed D4 value from LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O1.27mm_Z8.2mm to LED.
+Updated D4 symbol association from  to /b6715018-3b66-4fc7-b0d6-e3e31ff5307b.
+Updated D4 fields.
+Updated D4 sheetname to '/'.
+Updated D4 sheetfile to 'buttons stuff.kicad_sch'.
+Updated D4 footprint filters to 'LED* LED_SMD:* LED_THT:*'.
+Add net unconnected-(D4-A-Pad2).
+Connected D4 pin 2 to unconnected-(D4-A-Pad2).
+Add net unconnected-(D4-K-Pad1).
+Connected D4 pin 1 to unconnected-(D4-K-Pad1).
+Added J1 (footprint 'Module:Arduino_Nano').
+Changed REF** reference designator to J1.
+Changed J1 value from Arduino_Nano to Conn_01x06.
+Updated J1 symbol association from  to /f65c3f99-e3a1-43c4-8b4d-eaccd1cbd656.
+Updated J1 fields.
+Updated J1 sheetname to '/'.
+Updated J1 sheetfile to 'buttons stuff.kicad_sch'.
+Updated J1 footprint filters to 'Connector*:*_1x??_*'.
+Add net unconnected-(J1-URX-Pad3).
+Connected J1 pin 3 to unconnected-(J1-URX-Pad3).
+Updated SW2 sheetname to '/'.
+Updated SW2 sheetfile to 'buttons stuff.kicad_sch'.
+Add net unconnected-(J1-Pin_6-Pad6).
+Connected J1 pin 6 to unconnected-(J1-Pin_6-Pad6).
+Connected SW2 pin 1 to Net-(A1-D5).
+Connected SW2 pin 2 to Net-(J1-GND).
+Connected SW2 pin 1 to Net-(A1-D5).
+Connected J1 pin 1 to Net-(J1-GND).
+Connected SW2 pin 2 to Net-(J1-GND).
+
+Add net unconnected-(J1-SW-Pad5).
+Connected J1 pin 5 to unconnected-(J1-SW-Pad5).
+Connected J1 pin 2 to Net-(A1-VUSB/5V).
+Add net unconnected-(J1-URY-Pad4).
+Connected J1 pin 4 to unconnected-(J1-URY-Pad4).
+
+Connected J2 pin 1 to Net-(J1-GND).
+Added J2 (footprint 'Module:Arduino_Nano').
+Changed REF** reference designator to J2.
+Changed J2 value from Arduino_Nano to Conn_01x06.
+Updated J2 symbol association from  to /f32a4c63-889b-496a-9fd6-bc295017e817.
+Updated J2 fields.
+Updated J2 sheetname to '/'.
+Updated J2 sheetfile to 'buttons stuff.kicad_sch'.
+Updated J2 footprint filters to 'Connector*:*_1x??_*'.
+Add net unconnected-(J2-Pin_4-Pad4).
+Connected J2 pin 4 to unconnected-(J2-Pin_4-Pad4).
+Add net unconnected-(J2-Pin_5-Pad5).
+Connected J2 pin 5 to unconnected-(J2-Pin_5-Pad5).
+Add net unconnected-(J2-Pin_6-Pad6).
+Connected J2 pin 6 to unconnected-(J2-Pin_6-Pad6).
+Add net unconnected-(J2-Pin_3-Pad3).
+Connected J2 pin 3 to unconnected-(J2-Pin_3-Pad3).
+Add net unconnected-(J2-Pin_2-Pad2).
+Connected J2 pin 2 to unconnected-(J2-Pin_2-Pad2).
+Added SW1 (footprint 'Button_Switch_SMD:SW_Push_1P1T-SH_NO_CK_KMR2xxG').
+Changed REF** reference designator to SW1.
+Changed SW1 value from SW_Push_1P1T-SH_NO_CK_KMR2xxG to SW_Push.
+Updated SW1 symbol association from  to /bed6aa67-c6d0-40e2-97f8-21340151f077.
+Updated SW1 fields.
+Updated SW1 sheetname to '/'.
+Updated SW1 sheetfile to 'buttons stuff.kicad_sch'.
+Connected SW1 pin 1 to Net-(A1-D6).
+Connected SW1 pin 2 to Net-(J1-GND).
+Connected SW1 pin 2 to Net-(J1-GND).
+Connected SW1 pin 1 to Net-(A1-D6).
+Added SW2 (footprint 'Button_Switch_SMD:SW_Push_1P1T-SH_NO_CK_KMR2xxG').
+Changed REF** reference designator to SW2.
+Changed SW2 value from SW_Push_1P1T-SH_NO_CK_KMR2xxG to SW_Push.
+Updated SW2 symbol association from  to /6047f00e-d2b6-4630-b726-a1c48df20728.
+Updated SW2 fields.
+Warning: No net found for component J1 pad 19 (no pin 19 in symbol).
+Warning: No net found for component J1 pad 11 (no pin 11 in symbol).
+Warning: No net found for component J1 pad 22 (no pin 22 in symbol).
+Warning: No net found for component J1 pad 15 (no pin 15 in symbol).
+Warning: No net found for component J1 pad 14 (no pin 14 in symbol).
+Warning: No net found for component J1 pad 29 (no pin 29 in symbol).
+Warning: No net found for component J1 pad 17 (no pin 17 in symbol).
+Warning: No net found for component J1 pad 27 (no pin 27 in symbol).
+Warning: No net found for component J2 pad 12 (no pin 12 in symbol).
+Warning: No net found for component J1 pad 8 (no pin 8 in symbol).
+Warning: No net found for component J1 pad 13 (no pin 13 in symbol).
+Warning: No net found for component J2 pad 17 (no pin 17 in symbol).
+Warning: No net found for component J2 pad 29 (no pin 29 in symbol).
+Warning: No net found for component J1 pad 12 (no pin 12 in symbol).
+Warning: No net found for component J1 pad 30 (no pin 30 in symbol).
+Warning: No net found for component J2 pad 13 (no pin 13 in symbol).
+Warning: No net found for component J2 pad 28 (no pin 28 in symbol).
+Warning: No net found for component J2 pad 7 (no pin 7 in symbol).
+Warning: No net found for component J2 pad 20 (no pin 20 in symbol).
+Warning: No net found for component J1 pad 9 (no pin 9 in symbol).
+Warning: No net found for component J1 pad 21 (no pin 21 in symbol).
+Warning: No net found for component J1 pad 20 (no pin 20 in symbol).
+Warning: No net found for component J1 pad 7 (no pin 7 in symbol).
+Warning: No net found for component J1 pad 25 (no pin 25 in symbol).
+Warning: No net found for component J1 pad 10 (no pin 10 in symbol).
+Warning: No net found for component J2 pad 30 (no pin 30 in symbol).
+Warning: No net found for component J2 pad 18 (no pin 18 in symbol).
+Warning: No net found for component J2 pad 9 (no pin 9 in symbol).
+Warning: No net found for component J1 pad 18 (no pin 18 in symbol).
+Warning: No net found for component SW1 pad SH (no pin SH in symbol).
+Warning: No net found for component J1 pad 16 (no pin 16 in symbol).
+Warning: No net found for component J2 pad 25 (no pin 25 in symbol).
+Warning: No net found for component J2 pad 21 (no pin 21 in symbol).
+Warning: No net found for component J1 pad 28 (no pin 28 in symbol).
+Warning: No net found for component J1 pad 26 (no pin 26 in symbol).
+Warning: No net found for component J1 pad 23 (no pin 23 in symbol).
+Warning: No net found for component J2 pad 27 (no pin 27 in symbol).
+Warning: No net found for component J2 pad 16 (no pin 16 in symbol).
+Warning: No net found for component J2 pad 23 (no pin 23 in symbol).
+Warning: No net found for component J2 pad 11 (no pin 11 in symbol).
+Warning: No net found for component J2 pad 14 (no pin 14 in symbol).
+Warning: No net found for component J2 pad 15 (no pin 15 in symbol).
+Warning: No net found for component J2 pad 8 (no pin 8 in symbol).
+Warning: No net found for component J2 pad 22 (no pin 22 in symbol).
+Warning: No net found for component SW2 pad SH (no pin SH in symbol).
+Warning: No net found for component J2 pad 24 (no pin 24 in symbol).
+Warning: No net found for component J2 pad 19 (no pin 19 in symbol).
+Warning: No net found for component J2 pad 26 (no pin 26 in symbol).
+Warning: No net found for component J1 pad 24 (no pin 24 in symbol).
+Warning: No net found for component J2 pad 10 (no pin 10 in symbol).
+
+
+Info: Total warnings: 50, errors: 0.
