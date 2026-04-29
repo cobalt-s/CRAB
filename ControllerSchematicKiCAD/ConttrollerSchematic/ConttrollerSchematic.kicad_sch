@@ -6137,28 +6137,6 @@
 	)
 	(global_label "GND"
 		(shape input)
-		(at 64.77 73.66 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "1b1fa8a2-c11d-4765-a730-decfb8e5bbf3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 57.9143 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape input)
 		(at 220.98 71.12 180)
 		(fields_autoplaced yes)
 		(effects
@@ -6263,6 +6241,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape input)
+		(at 64.77 73.66 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "51618685-948a-411c-b96a-fe1d1c4861d8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 57.9143 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -6742,7 +6742,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bed6aa67-c6d0-40e2-97f8-21340151f077")
-		(property "Reference" "Button1"
+		(property "Reference" "Button12222"
 			(at 73.66 66.04 0)
 			(effects
 				(font
@@ -6794,7 +6794,7 @@
 		(instances
 			(project ""
 				(path "/078b711c-5737-48ab-b356-b914bbaeec72"
-					(reference "Button1")
+					(reference "Button12222")
 					(unit 1)
 				)
 			)
