@@ -1577,6 +1577,16 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "FIX\n"
+		(exclude_from_sim no)
+		(at 214.63 103.632 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "f843d74d-f8d5-4154-904b-a28b3bd4d14b")
+	)
 	(no_connect
 		(at 196.85 87.63)
 		(uuid "1272e7d9-a61f-4121-b9b5-f8522b457990")
@@ -6382,7 +6392,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinSocket_1.00mm:PinSocket_1x04_P1.00mm_Vertical"
 			(at 232.41 66.04 0)
 			(effects
 				(font
@@ -6536,7 +6546,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-SH_NO_CK_KMR2xxG"
 			(at 73.66 85.09 0)
 			(effects
 				(font
@@ -6758,7 +6768,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR"
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T-SH_NO_CK_KMR2xxG"
 			(at 73.66 68.58 0)
 			(effects
 				(font

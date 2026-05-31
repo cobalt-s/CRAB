@@ -1,0 +1,107 @@
+"""
+Controller V3 Split - KiCad PCB Outline Generator (v4 - DOGBONE fixed arcs)
+"""
+
+import math
+import pcbnew
+
+# --- DIMENSIONS (mm) ---------------------------------------------------------
+
+OUTER_LENGTH    = 176.60
+WALL_THICKNESS  =   2.00
+INNER_LENGTH    = OUTER_LENGTH - 2 * WALL_THICKNESS   # 172.60mm
+
+OUTER_END_R     =  26.81
+GRIP_R          = OUTER_END_R - WALL_THICKNESS        # 24.81mm
+
+MIDDLE_H        =  49.20
+MIDDLE_HALF     = MIDDLE_H / 2                        # 24.60mm
+
+GRIP_CENTER_OFFSET = GRIP_R
+
+ORIGIN_X = 30.0
+ORIGIN_Y = 50.0
+
+# --- HELPERS -----------------------------------------------------------------
+
+def mm(v):
+    return pcbnew.FromMM(v)
+
+def add_line(board, x1, y1, x2, y2, layer=pcbnew.Edge_Cuts):
+    s = pcbnew.PCB_SHAPE(board)
+    s.SetShape(pcbnew.SHAPE_T_SEGMENT)
+    s.SetLayer(layer)
+    s.SetStart(pcbnew.VECTOR2I(mm(x1), mm(y1)))
+    s.SetEnd(pcbnew.VECTOR2I(mm(x2), mm(y2)))
+    s.SetWidth(mm(0.05))
+    board.Add(s)
+
+def add_arc(board, cx, cy, radius, start_angle_deg, end_angle_deg,
+            layer=pcbnew.Edge_Cuts):
+    a = pcbnew.PCB_SHAPE(board)
+    a.SetShape(pcbnew.SHAPE_T_ARC)
+    a.SetLayer(layer)
+    a.SetWidth(mm(0.05))
+
+    cx_nm, cy_nm = mm(cx), mm(cy)
+    r_nm = mm(radius)
+
+    sa = math.radians(start_angle_deg)
+    sx = cx_nm + int(r_nm * math.cos(sa))
+    sy = cy_nm - int(r_nm * math.sin(sa))
+
+    a.SetCenter(pcbnew.VECTOR2I(cx_nm, cy_nm))
+    a.SetStart(pcbnew.VECTOR2I(sx, sy))
+
+    span = end_angle_deg - start_angle_deg
+    a.SetArcAngleAndEnd(pcbnew.EDA_ANGLE(span, pcbnew.DEGREES_T), False)
+    board.Add(a)
+
+# --- MAIN --------------------------------------------------------------------
+
+def draw_controller_pcb():
+    board = pcbnew.GetBoard()
+
+    cy = ORIGIN_Y + GRIP_R
+
+    left_cx  = ORIGIN_X + GRIP_CENTER_OFFSET
+    right_cx = ORIGIN_X + INNER_LENGTH - GRIP_CENTER_OFFSET
+
+    R  = GRIP_R
+    mh = MIDDLE_HALF
+
+    dx = math.sqrt(R * R - mh * mh)
+    tangent_angle = math.degrees(math.asin(mh / R))
+
+    print(f"Drawing dogbone outline:")
+    print(f"  Inner length: {INNER_LENGTH:.2f} mm")
+    print(f"  Grip radius:  {R:.2f} mm")
+    print(f"  Middle width: {MIDDLE_H:.2f} mm")
+
+    # Top middle edge - from left grip tangent to right grip tangent
+    top_y = cy - mh
+    add_line(board, left_cx + dx, top_y, right_cx - dx, top_y)
+
+    # Bottom middle edge
+    bot_y = cy + mh
+    add_line(board, left_cx + dx, bot_y, right_cx - dx, bot_y)
+
+    # LEFT grip arc - should bulge LEFT (outward)
+    # Tangent points are at top-right and bottom-right of the left grip.
+    # We need the arc that goes around the LEFT side (the long way).
+    # Reversed direction: start at bottom tangent, sweep through 180 to top tangent
+    add_arc(board, left_cx, cy, R,
+            -(180 - tangent_angle),
+            -(180 + tangent_angle))
+
+    # RIGHT grip arc - should bulge RIGHT (outward)
+    # Tangent points are at top-left and bottom-left of right grip.
+    # Arc goes around the RIGHT side.
+    add_arc(board, right_cx, cy, R,
+            tangent_angle,
+            -tangent_angle)
+
+    pcbnew.Refresh()
+    print(f"\nDone! Total length: {INNER_LENGTH:.2f} mm, max width: {2*R:.2f} mm")
+
+draw_controller_pcb()
